@@ -252,6 +252,11 @@ public static int evenMax(TreeNode node) {
      * @return whether every value is divisible by k
      */
     public static boolean hasNonDivisible(TreeNode node, int k) {
+        if(node == null){return false;}
+        if(node.data % k != 0){return true;}
+        boolean BoLeft = hasNonDivisible(node.left, k);
+        boolean BoRight = hasNonDivisible(node.right, k);
+        if(BoLeft||BoRight){return true;}
         return false;
     }
 
