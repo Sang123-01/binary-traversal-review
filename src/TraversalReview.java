@@ -93,8 +93,26 @@ public class TraversalReview {
      * @param node
      * @return
      */
-    public static int evenMax(TreeNode node) {
-        return Integer.MIN_VALUE;
+public static int evenMax(TreeNode node) {
+        if (node == null) return Integer.MIN_VALUE;
+        
+        int max = Integer.MIN_VALUE;
+        if (node.data % 2 == 0) {
+            max = node.data;
+        }
+
+
+        int leftMax = evenMax(node.left);
+        
+            if (leftMax > max) {
+                max = leftMax;
+            }
+        int rightMax = evenMax(node.right);
+    
+            if (rightMax > max) {
+                max = rightMax;
+            } 
+        return max;
     }
 
     /**
@@ -121,8 +139,28 @@ public class TraversalReview {
      * @param node the root of the tree
      * @return whether all child nodes have strictly greater values than the parents
      */
-    public static boolean isIncreasing(TreeNode node) {
-        return false;
+    public static boolean isIncreasing(TreeNode node) 
+    {
+        if(node == null || (node.left == null && node.right == null)){return true;}
+        if(node.left != null)
+        {
+            if(node.data >= node.left.data)
+            {
+                return false;
+            }
+        }
+        if(node.right != null)
+        {
+            if(node.data >= node.right.data)
+            {
+                return false;
+            }
+        }
+
+        boolean LeftMax = isIncreasing(node.left);
+        boolean RightMax = isIncreasing(node.right);
+        if(LeftMax == false || RightMax == false){return false;}
+        return true;
     } 
 
     /**
@@ -147,10 +185,16 @@ public class TraversalReview {
      * @param node the root of the tree
      * @return whether every node has 0 or 2 children
      */
-    public static boolean noSingleChildren(TreeNode node) {
-        return false;
+    public static boolean noSingleChildren(TreeNode node) 
+    {
+        if(node == null){return true;}
+        if(node.left == null && node.right == null){return true;}
+        if(node.left == null || node.right == null){return false;}
+        boolean BoLeft = noSingleChildren(node.left);
+        boolean BoRight = noSingleChildren(node.right);
+        if(BoLeft == false || BoRight == false){return false;}
+        return true;
     }
-
     /**
      * Returns whether at least one of the values in the tree is zero.
      * 
@@ -173,7 +217,13 @@ public class TraversalReview {
      * @param node the root of the tree
      * @return whether there is it least one zero value in the tree.
      */
-    public static boolean hasZero(TreeNode node) {
+    public static boolean hasZero(TreeNode node) 
+    {   
+        if(node == null){return false;}
+        if(node.data == 0){return true;}
+        boolean BoLeft = hasZero(node.left);
+        boolean BoRight = hasZero(node.right);
+        if(BoLeft == true || BoRight == true){return true;}
         return false;
     }
 
